@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ "x$2" != "x" ]; then
+    USER_BASH=$2
+else
+    USER_BASH='/bin/bash'
+fi
+
+docker exec -it $1 $USER_BASH
+

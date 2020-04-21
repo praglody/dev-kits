@@ -1,0 +1,7 @@
+#! /bin/bash
+
+config=(
+    "dev@123.207.144.90  (腾讯云)                | here-is-password"
+    "dev@123.207.144.90  (腾讯云)                | here-is-password"
+)
+

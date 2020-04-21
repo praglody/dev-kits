@@ -1,0 +1,14 @@
+#!/usr/bin/env expect
+
+spawn sudo su -
+
+expect {
+    "*assword" {
+        send "234555\r"
+        exp_continue
+    }
+    "root" {send ""}
+}
+
+interact
+
