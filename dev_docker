@@ -1,0 +1,22 @@
+#!/usr/bin/env expect
+
+set timeout -1
+set target "centos"
+set dir [lindex $argv 0]
+set user [exec whoami]
+set docker [exec which docker]
+
+if { $dir == "" } {
+    set dir "/data/devhome"    
+}
+
+if { $user == "root" } {
+    spawn $docker  exec -it $target /bin/su - $user
+} else {
+    spawn sudo $docker exec -it $target /bin/su - $user
+}
+
+expect "$user" {send "cd $dir\r"}
+
+interact
+
