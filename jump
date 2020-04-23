@@ -43,12 +43,13 @@ while [ "$server" != "exit" -a "$server" != "e" ]; do
         /usr/bin/expect /data/devhome/dev-kits/server_conn.sh $user $ip $password "cd /data/devhome/${user}$dir"
         break
         ;;
-    3|4|5|6)
-	/usr/bin/expect /data/devhome/dev-kits/server_conn.sh $user $ip $password "ls"
-        break
-        ;;
     *)
-        continue
+        if [ $user ]; then
+	        /usr/bin/expect /data/devhome/dev-kits/server_conn.sh $user $ip $password "ls"
+            break
+        else
+            continue
+        fi
     esac
 done
 
