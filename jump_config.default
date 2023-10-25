@@ -1,7 +1,8 @@
 #! /bin/bash
 
 config=(
-    "dev@123.207.144.90  (腾讯云)                | here-is-password"
-    "dev@123.207.144.90  (腾讯云)                | here-is-password"
+    # 这里一定要带上端口号，程序不支持默认端口号
+    "dev@123.207.144.90:22  (腾讯云)            | here-is-password | pwd"
+    "dev@123.207.144.90:22  (腾讯云)            | here-is-password | pwd"
 )
 
