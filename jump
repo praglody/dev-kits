@@ -9,7 +9,8 @@ i=1
 for item in "${config[@]}"; do
     conn[$i]=$(echo $item|awk '{print $1}')
     show[$i]=$(echo $item|awk -F'|' '{print $1}')
-    passwd[$i]=$(echo $item|awk '{print $NF}')
+    passwd[$i]=$(echo $item|awk '{print $2}')
+    cmds[$i]=$(echo $item|awk '{print $NF}')
     i=$(($i+1))
 done
 
@@ -23,29 +24,31 @@ while [ "$server" != "exit" -a "$server" != "e" ]; do
     echo "=========================================="
     i=1
     for item in "${show[@]}"; do
-        echo "$i > ${item}"
+        echo "[ $i ] ${item}"
 	i=$(($i+1))
     done
     echo ""
     read -p "pelase select a server: " server
 
     user=$(echo ${conn[$server]}|awk -F'@' '{print $1}')
-    ip=$(echo ${conn[$server]}|awk -F'@' '{print $2}')
+    ip=$(echo ${conn[$server]}|awk -F'@' '{print $2}'|awk -F':' '{print $1}')
+    port=$(echo ${conn[$server]}|awk -F'@' '{print $2}'|awk -F':' '{print $2}')
     password=${passwd[$server]}
+    cmd=${cmds[$server]}
 
     case $server in
     0)
         /usr/bin/expect /data/devhome/dev-kits/dev_docker $dir
         break
         ;;
-    1|2)
+    999|998)
         dir=$(echo $dir|awk -F'data\/devhome' '{print $2}')
-        /usr/bin/expect /data/devhome/dev-kits/server_conn.sh $user $ip $password "cd /data/devhome/${user}$dir"
+        /usr/bin/expect /data/devhome/dev-kits/server_conn.sh $user $ip $port $password "cd /data/devhome/${user}$dir"
         break
         ;;
     *)
         if [ $user ]; then
-	        /usr/bin/expect /data/devhome/dev-kits/server_conn.sh $user $ip $password "ls"
+	        /usr/bin/expect /data/devhome/dev-kits/server_conn.sh $user $ip $port $password $cmd
             break
         else
             continue
