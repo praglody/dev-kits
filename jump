@@ -9,8 +9,8 @@ i=1
 for item in "${config[@]}"; do
     conn[$i]=$(echo $item|awk '{print $1}')
     show[$i]=$(echo $item|awk -F'|' '{print $1}')
-    passwd[$i]=$(echo $item|awk '{print $2}')
-    cmds[$i]=$(echo $item|awk '{print $NF}')
+    passwd[$i]=$(echo $item|awk -F'|' '{print $2}')
+    cmds[$i]=$(echo $item|awk -F'|' '{print $NF}')
     i=$(($i+1))
 done
 
